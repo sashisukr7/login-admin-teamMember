@@ -1,14 +1,14 @@
-.login-card {
-    min-height: 50vh;
-}
+/* .login-card {
+    min-height: 70vh;
+} */
 
 
 .registerMessage {
     margin-top: 10vh;
 }
 
-@media (max-width:399px){
+/* @media (max-width:399px){
     .login-card {
-        min-height: 100vh;
+        min-height: 50vh;
     }
-}
+} */

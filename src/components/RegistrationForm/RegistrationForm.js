@@ -200,7 +200,7 @@ function RegistrationForm(props) {
 
     const validateForm=()=> {
         if (!isEmpty(state.role) && !isEmpty(state.firstName) && !isEmpty(state.lastName) && !isEmpty(state.email) && !isEmpty(state.password) && !isEmpty(state.confirmPassword) &&
-          isEmpty(formErrors.role) && isEmpty(formErrors.firstName) && isEmpty(formErrors.lastName) && isEmpty(formErrors.email) &&  isEmpty(formErrors.password) && isEmpty(formErrors.password)
+          isEmpty(formErrors.role) && isEmpty(formErrors.firstName) && isEmpty(formErrors.lastName) && isEmpty(formErrors.email) &&  isEmpty(formErrors.password) 
          ) {
           return true;
         }

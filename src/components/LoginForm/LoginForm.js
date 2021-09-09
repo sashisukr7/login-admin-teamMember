@@ -1,27 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState ,useRef} from 'react';
 import axios from 'axios';
 import './LoginForm.css';
 import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
 import { useHistory } from 'react-router-dom';
+import {isEmpty,emailRegex,passwordRegex,isValidName} from '../../util/apputils';
+
 
 function LoginForm(props) {
     const history = useHistory();
+    const inputRefEmail = useRef(null);
+    const inputRefPassword = useRef(null);
     const [state, setState] = useState({
         email: "",
         password: "",
         successMessage: null
     })
+    const [formErrors , setFormErrors] = useState({
+        email : "",
+        password:"",
+    })
+    const [visibleError , setVisibleError] = useState({
+        email : "",
+        password:"",
+    })
     const handleChange = (e) => {
-        const { id, value } = e.target
+        const {id , value} = e.target 
+        switch (id) {
+            case "email":
+                if (emailRegex.test(value)) {
+                    setFormErrors(prevState => ({
+                        ...prevState,
+                        email: ""
+                      }))
+                  }
+                 else{
+                    setFormErrors(prevState => ({
+                        ...prevState,
+                        email: "invalid email address"
+                      }))
+                 }
+              break;
+              case "password":
+                if (isValidPassword(value)) {
+                    setFormErrors(prevState => ({
+                        ...prevState,
+                        password: ""
+                      }))
+                  }
+                 else{
+                    setFormErrors(prevState => ({
+                        ...prevState,
+                        password: "Minimum 8 characters & 1 special character required"
+                      }))
+                 }
+              break;
+            default:
+              break;
+            }
         setState(prevState => ({
             ...prevState,
-            [id]: value
+            [id] : value
         }))
     }
 
+    const isValidPassword=(password)=> {
+        let result = passwordRegex.test(password)
+        return result
+      }
+
     const handleSubmitClick = (e) => {
-        let without_backend_support = true
         e.preventDefault();
+        if(validateForm()) {
+        let without_backend_support = true
         //without backend support
         if (without_backend_support) {
             props.updateTitle('Home')
@@ -60,6 +110,7 @@ function LoginForm(props) {
                 });
         }
     }
+    }
     const redirectToHome = () => {
         props.updateTitle('Home')
         props.history.push('/admin');
@@ -68,32 +119,111 @@ function LoginForm(props) {
          history.push('/register'); 
          props.updateTitle('Register');
     }
+
+    const validateForm=()=> {
+        if (!isEmpty(state.email) && !isEmpty(state.password) &&
+          isEmpty(formErrors.email) &&  isEmpty(formErrors.password)
+         ) {
+          return true;
+        }
+        else if (isEmpty(state.email)) {
+            inputRefEmail.current.focus();
+            setFormErrors(prevState => ({
+                ...prevState,
+                email: "Please provide email"
+              }))
+              setVisibleError(prevState => ({
+                 ...prevState,
+                 email:true
+             }))
+          return false;
+        }
+        else if (isEmpty(state.password)) {
+            inputRefPassword.current.focus();
+            setFormErrors(prevState => ({
+                ...prevState,
+                password: "Please provide password"
+              }))
+              setVisibleError(prevState => ({
+                 ...prevState,
+                 password:true
+             }))
+          return false;
+        }
+        else {
+          return false;
+        }
+      }
+      
+    const hideErrorMsg = (name) => {
+        toggleErrorVisibility(name, false)
+      }
+    
+    const showErrorMsg = (name) => {
+        toggleErrorVisibility(name, true)
+      }
+    
+    const toggleErrorVisibility = (name, value) => {
+        switch (name) {
+            case "email":
+                setVisibleError(prevState => ({
+                    ...prevState,
+                    email: value
+                }))
+                break;
+            case "password":
+                setVisibleError(prevState => ({
+                    ...prevState,
+                    password: value
+                }))
+                break;
+            default:
+                break;
+        }
+    }
     return (
-        <div className="card col-12 col-lg-4 login-card  mt-2 hv-center">
+        <div className="card col-12 col-lg-4 login-card  mt-2 hv-center p-64px-16px">
             <form >
                 <div className="form-group text-left">
                     <label htmlFor="exampleInputEmail1">UserName</label>
                     <input type="email"
                         className="form-control"
                         id="email"
+                        ref={inputRefEmail}
                         aria-describedby="emailHelp"
                         placeholder="Enter email"
                         value={state.email}
                         onChange={handleChange}
                         autoComplete="off"
+                        spellCheck="false"
+                        onFocus={() =>hideErrorMsg("email")}
+                        onBlur={() =>showErrorMsg("email")}
                     />
-                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                     <div className="m-2">
+                        {formErrors.email.length > 0 && visibleError.email && (
+                          <span className="errorMessage">{formErrors.email} </span>
+                        )}
+                      </div>
                 </div>
                 <div className="form-group text-left">
                     <label htmlFor="exampleInputPassword1">Password</label>
                     <input type="password"
                         className="form-control"
                         id="password"
+                        ref={inputRefPassword}
                         placeholder="Password"
                         value={state.password}
                         onChange={handleChange}
                         autoComplete="off"
+                        spellCheck="false"
+                        onFocus={() =>hideErrorMsg("passsword")}
+                        onBlur={() =>showErrorMsg("password")}
                     />
+                     <div className="m-2">
+                        {formErrors.password.length > 0 && visibleError.password && (
+                          <span className="errorMessage">{formErrors.password} </span>
+                        )}
+                      </div>
                 </div>
                
                 <div className="form-check">
