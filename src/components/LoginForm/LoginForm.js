@@ -1,18 +1,20 @@
-import React, { useState ,useRef} from 'react';
+import React, { useState ,useRef,useEffect} from 'react';
 import axios from 'axios';
 import './LoginForm.css';
 import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
 import { useHistory } from 'react-router-dom';
 import {isEmpty,emailRegex,passwordRegex,isValidName} from '../../util/apputils';
-
+import {useSelector, useDispatch} from 'react-redux';
 
 function LoginForm(props) {
+    const dispatch = useDispatch();
+    const userList = useSelector(state => state.registedReducer.userList)
     const history = useHistory();
     const inputRefEmail = useRef(null);
     const inputRefPassword = useRef(null);
     const [state, setState] = useState({
-        email: "",
-        password: "",
+        email: "ss@gmail.com",
+        password: "asdfghjk#",
         successMessage: null
     })
     const [formErrors , setFormErrors] = useState({
@@ -23,6 +25,9 @@ function LoginForm(props) {
         email : "",
         password:"",
     })
+    useEffect(() => {
+        console.log("sssStateRAdmin",userList)
+    },[])
     const handleChange = (e) => {
         const {id , value} = e.target 
         switch (id) {
@@ -73,13 +78,43 @@ function LoginForm(props) {
         if(validateForm()) {
         let without_backend_support = true
         //without backend support
+        let userData={};
         if (without_backend_support) {
-            props.updateTitle('Home')
+            
+            let flagFound=0;
+             for(let i in userList)
+             {
+                 if(userList[i].email==state.email && userList[i].password==state.password)
+                 {
+                    flagFound=1;
+                    userData=userList[i];
+                    break;
+                 }
+             }
+
+             if(flagFound==0)
+             {
+                 alert("You have entered wrong email or password.")
+                 return
+             }
             let h = localStorage.setItem("sessionTimeoutHour", 0);
             let m = localStorage.setItem("sessionTimeoutMinute", 15);
             let s = localStorage.setItem("sessionTimeoutSecond", 0);
-            localStorage.setItem(ACCESS_TOKEN_NAME, "gfagf154757hguh768kjbh6");
+           
+            localStorage.setItem('userId', userData.id);
+            localStorage.setItem('userEmail', userData.email);
+            localStorage.setItem('userName', userData.name)
+            localStorage.setItem('role', userData.role);
+            localStorage.setItem('accessToken', userData.accessToken);
+              dispatch({
+                type: 'LOGIN',
+                payload: {
+                  user:userData
+                }
+              });
+
             props.setTimer(0, 15, 0);
+            props.updateTitle('Home')
             history.push('/admin');
         }
         else {
@@ -94,8 +129,33 @@ function LoginForm(props) {
                             ...prevState,
                             'successMessage': 'Login successful. Redirecting to home page..'
                         }))
-                        localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token);
-                        redirectToHome();
+
+                       
+                        userData.id = response.data.userDetail.id
+                        userData.email = response.data.userDetail.userName
+                        userData.accessToken = response.data.token
+                        let name = response.data.userDetail.firstName + " " + response.data.userDetail.lastName
+                        userData.name = name
+                        userData.role = response.data.role
+            
+                        localStorage.setItem('userId', userData.id);
+                        localStorage.setItem('userEmail', userData.email);
+                        localStorage.setItem('userName', userData.name)
+                        localStorage.setItem('role', userData.role);
+                        localStorage.setItem('accessToken', userData.accessToken);
+                          dispatch({
+                            type: 'LOGIN',
+                            payload: {
+                              user:userData
+                            }
+                          });
+                        if(userData.role == "admin")
+                        {
+                            redirectToAdminHome();
+                        }
+                        else{
+                            redirectToTeamMemberHome(); 
+                        }
                        // props.showError(null)
                     }
                     else if (response.code === 204) {
@@ -111,9 +171,13 @@ function LoginForm(props) {
         }
     }
     }
-    const redirectToHome = () => {
+    const redirectToAdminHome = () => {
         props.updateTitle('Home')
         props.history.push('/admin');
+    }
+    const redirectToTeamMemberHome = () => {
+        props.updateTitle('Home')
+        props.history.push('/teamMember');
     }
     const redirectToRegister = () => {
          history.push('/register'); 

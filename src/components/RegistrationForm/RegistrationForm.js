@@ -1,26 +1,29 @@
-import React, {useState,useRef} from 'react';
+import React, {useState,useRef,useEffect} from 'react';
 import axios from 'axios';
 import './RegistrationForm.css';
 import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 import {isEmpty,emailRegex,passwordRegex,isValidName} from '../../util/apputils';
+import {useSelector, useDispatch} from 'react-redux';
 
 
 function RegistrationForm(props) {
+    const dispatch = useDispatch();
     const inputRefRole = useRef(null);
     const inputRefFirstName = useRef(null);
     const inputRefLastName = useRef(null);
     const inputRefEmail = useRef(null);
     const inputRefPassword = useRef(null);
     const inputRefConfirmPassword = useRef(null);
-     
+    const authData = useSelector(state => state.authReducer);
+
     const [state , setState] = useState({
-        firstName:"",
-        lastName:"",
-        role:"",
-        email : "",
-        password : "",
-        confirmPassword: "",
+        firstName:"ss",
+        lastName:"kk",
+        role:"admin",
+        email : "ss@gmail.com",
+        password : "asdfghjk#",
+        confirmPassword: "asdfghjk#",
         successMessage: null
     })
     const [formErrors , setFormErrors] = useState({
@@ -39,7 +42,7 @@ function RegistrationForm(props) {
         confirmPassword:"",
     })
 
-    
+
     const handleChange = (e) => {
         const {id , value} = e.target 
         switch (id) {
@@ -132,9 +135,44 @@ function RegistrationForm(props) {
         }))
 
     }
+
+  function generateRandomValue() {
+    var digits = Math.floor(Math.random() * 9000000000) + 1000000000;
+    return digits;
+  }
     const sendDetailsToServer = () => {
            // props.showError(null);
 //redirect to home page considering admin
+//generate token,id,userdata, and save in (authreducer +localstorage parse and stingify) + registered candidate array in registerreducer
+            let userData = {}
+            let ran=generateRandomValue();
+            userData.id = ran
+            userData.email = state.email
+            userData.accessToken = ran-1
+            let name = state.firstName + " " + state.lastName
+            userData.name = name
+            userData.role = state.role
+
+            localStorage.setItem('userId', userData.id);
+            localStorage.setItem('userEmail', userData.email);
+            localStorage.setItem('userName', userData.name)
+            localStorage.setItem('role', userData.role);
+            localStorage.setItem('accessToken', userData.accessToken);
+              dispatch({
+                type: 'LOGIN',
+                payload: {
+                  user:userData
+                }
+              });
+
+              userData.password = state.password
+              dispatch({
+                type: 'ADD_REGISTERED_USER',
+                payload: {
+                  user:userData
+                }
+              });
+
             props.updateTitle('Home')
             if(state.role=="admin")
             {
@@ -156,9 +194,27 @@ function RegistrationForm(props) {
                         setState(prevState => ({
                             ...prevState,
                             'successMessage' : 'Registration successful. Redirecting to home page..'
-                        }))
-                        localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
-                        if(state.role=="admin")
+                        })) 
+                        let userData = {}
+                        userData.id = response.data.userDetail.id
+                        userData.email = response.data.userDetail.userName
+                        userData.accessToken = response.data.token
+                        let name = response.data.userDetail.firstName + " " + response.data.userDetail.lastName
+                        userData.name = name
+                        userData.role = response.data.role
+            
+                        localStorage.setItem('userId', userData.id);
+                        localStorage.setItem('userEmail', userData.email);
+                        localStorage.setItem('userName', userData.name)
+                        localStorage.setItem('role', userData.role);
+                        localStorage.setItem('accessToken', userData.accessToken);
+                          dispatch({
+                            type: 'LOGIN',
+                            payload: {
+                              user:userData
+                            }
+                          });
+                        if(userData.role == "admin")
                         {
                             redirectToAdminHome();
                         }
