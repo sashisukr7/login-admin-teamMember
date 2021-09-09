@@ -1,25 +1,87 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Header from './components/Header/Header';
+import LoginForm from './components/LoginForm/LoginForm';
+import RegistrationForm from './components/RegistrationForm/RegistrationForm';
+import HomeAdmin from './components/Admin/HomeAdmin/HomeAdmin';
+import HomeTeamMember from './components/TeamMember/HomeTeamMember/HomeTeamMember';
+import { ACCESS_TOKEN_NAME } from './constants/apiConstants';
+import { createBrowserHistory } from 'history';
 
-function App() {
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import Footer from './components/Footer/Footer';
+//import Footer from './components/Footer/Footer';
+
+
+function App(props) {
+  const [title, updateTitle] = useState(null);
+  const history = createBrowserHistory();
+
+  let myInterval;
+  const setTimer = (hour, minutes, seconds) => {
+    myInterval = setInterval(() => {
+     // console.log("hour min sec", hour, minutes, seconds)
+      if (seconds > 0) {
+        seconds = seconds - 1;
+        localStorage.setItem("sessionTimeoutSecond", seconds);
+      }
+      else if (minutes > 0) {
+        minutes = minutes - 1;
+        seconds = 59
+        localStorage.setItem("sessionTimeoutSecond", seconds);
+        localStorage.setItem("sessionTimeoutMinute", minutes);
+      }
+      else if (hour > 0) {
+        hour = hour - 1;
+        minutes = 59;
+        seconds = 59;
+        localStorage.setItem("sessionTimeoutSecond", seconds);
+        localStorage.setItem("sessionTimeoutMinute", seconds);
+        localStorage.setItem("sessionTimeoutHour", hour);
+      }
+      else {
+
+        clearInterval(myInterval)
+        // logout
+        localStorage.removeItem(ACCESS_TOKEN_NAME)
+        alert("Session Timeout")
+        history.push('/login')
+        updateTitle('Login')
+        window.location.reload();
+      }
+    }, 1000)
+  }
+
+  useEffect(() => {
+    //login state has token
+    if (localStorage.getItem(ACCESS_TOKEN_NAME))
+      setTimer(localStorage.getItem("sessionTimeoutHour"), localStorage.getItem("sessionTimeoutMinute"), localStorage.getItem("sessionTimeoutSecond"));
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React ...
-        </a>
-      </header>
-    </div>
+    <Router history={history}>
+      <div className="App">
+        <Header title={title} updateTitle={updateTitle} />
+        <div className="container d-flex align-items-center flex-column">
+          <Switch>
+            <Route path="/" exact="true" component={() => <RegistrationForm  updateTitle={updateTitle}/>}>
+            </Route>
+            <Route path="/register" component={() => <RegistrationForm  updateTitle={updateTitle}/>}>
+            </Route>
+            <Route path="/login" component={() => <LoginForm setTimer={setTimer}  updateTitle={updateTitle} />}>
+            </Route>
+            <Route path="/admin" component={() => <HomeAdmin />}>
+            </Route>
+            <Route path="/teamMember" component={() => <HomeTeamMember />}>
+            </Route>
+          </Switch> 
+        </div>
+        <Footer />
+      </div>
+    </Router>
   );
 }
-
 export default App;

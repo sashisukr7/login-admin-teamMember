@@ -1,0 +1,354 @@
+import React, {useState,useRef} from 'react';
+import axios from 'axios';
+import './RegistrationForm.css';
+import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
+import { withRouter } from "react-router-dom";
+import {isEmpty,emailRegex, isValidName} from '../../util/apputils';
+
+
+function RegistrationForm(props) {
+    const inputRefRole = useRef(null);
+    const inputRefFirstName = useRef(null);
+    const inputRefLastName = useRef(null);
+    const inputRefEmail = useRef(null);
+    const [state , setState] = useState({
+        firstName:"",
+        lastName:"",
+        role:"",
+        email : "",
+        successMessage: null
+    })
+    const [formErrors , setFormErrors] = useState({
+        firstName:"",
+        lastName:"",
+        role:"",
+        email : "",
+    })
+    const [visibleError , setVisibleError] = useState({
+        firstName:"",
+        lastName:"",
+        email : "",
+    })
+
+    
+    const handleChange = (e) => {
+        const {id , value} = e.target 
+        switch (id) {
+            case "role":
+              if (isEmpty(value)) {
+                setFormErrors(prevState => ({
+                    ...prevState,
+                    role: "Please provide role"
+                  }))
+              }
+             else{
+                setFormErrors(prevState => ({
+                    ...prevState,
+                    role: ""
+                  }))
+             }
+              break;
+            case "firstName":
+                if (isValidName(value)) {
+                    setFormErrors(prevState => ({
+                        ...prevState,
+                        firstName: ""
+                      }))
+                  }
+                 else{
+                      return
+                 }
+                 break;
+                
+            case "lastName":
+                if (isValidName(value)) {
+                    setFormErrors(prevState => ({
+                        ...prevState,
+                        lastName: ""
+                      }))
+                  }
+                 else{
+                    return
+                 }
+                 break;
+                 
+            case "email":
+                if (emailRegex.test(value)) {
+                    setFormErrors(prevState => ({
+                        ...prevState,
+                        email: ""
+                      }))
+                  }
+                 else{
+                    setFormErrors(prevState => ({
+                        ...prevState,
+                        email: "invalid email address"
+                      }))
+                 }
+              break;
+            default:
+              break;
+            }
+        setState(prevState => ({
+            ...prevState,
+            [id] : value
+        }))
+
+    }
+    const sendDetailsToServer = () => {
+           // props.showError(null);
+//redirect to home page considering admin
+            props.updateTitle('Home')
+            if(state.role=="admin")
+            {
+                redirectToAdminHome();
+            }
+            else{
+                redirectToTeamMemberHome(); 
+            }
+            const payload={
+                "role":state.role,
+                "firstName":state.firstName,
+                "lastName":state.lastName,
+                "email":state.email,
+                
+            }
+            axios.post(API_BASE_URL+'/user/register', payload)
+                .then(function (response) {
+                    if(response.status === 200){
+                        setState(prevState => ({
+                            ...prevState,
+                            'successMessage' : 'Registration successful. Redirecting to home page..'
+                        }))
+                        localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
+                        if(state.role=="admin")
+                        {
+                            redirectToAdminHome();
+                        }
+                        else{
+                            redirectToTeamMemberHome(); 
+                        }
+                        
+                        //props.showError(null)
+                    } else{
+                      //  props.showError("Some error ocurred");
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });        
+    }
+    const redirectToAdminHome = () => {
+        props.updateTitle('Home')
+        props.history.push('/admin');
+    }
+    const redirectToTeamMemberHome = () => {
+        props.updateTitle('Home')
+        props.history.push('/teamMember');
+    }
+    const redirectToLogin = () => {
+        props.updateTitle('Login')
+        props.history.push('/login'); 
+    }
+    const handleSubmitClick = (e) => {
+            e.preventDefault();
+            if (validateForm()) {
+            sendDetailsToServer() 
+            }   
+    }
+    const validateForm=()=> {
+        if (!isEmpty(state.role) && !isEmpty(state.firstName) && !isEmpty(state.lastName) && !isEmpty(state.email) &&
+          isEmpty(formErrors.role) && isEmpty(formErrors.firstName) && isEmpty(formErrors.lastName) && isEmpty(formErrors.email)
+         ) {
+          return true;
+        }
+        else if (isEmpty(state.role)) {
+            inputRefRole.current.focus();
+                 setFormErrors(prevState => ({
+                   ...prevState,
+                   role: "Please provide role"
+                 }))
+            return false;
+          }
+        else if (isEmpty(state.firstName)) {
+            inputRefFirstName.current.focus();
+            setFormErrors(prevState => ({
+                ...prevState,
+                firstName: "Please provide firstName"
+              }))
+              setVisibleError(prevState => ({
+                 ...prevState,
+                 firstName:true
+             }))
+            return false;
+          }
+        else if (isEmpty(state.lastName)) {
+            inputRefLastName.current.focus();
+            setFormErrors(prevState => ({
+                ...prevState,
+                lastName: "Please provide lastName"
+              }))
+              setVisibleError(prevState => ({
+                 ...prevState,
+                 lastName:true
+             }))
+            return false;
+          }
+        else if (isEmpty(state.email)) {
+            inputRefEmail.current.focus();
+            setFormErrors(prevState => ({
+                ...prevState,
+                email: "Please provide email"
+              }))
+              setVisibleError(prevState => ({
+                 ...prevState,
+                 email:true
+             }))
+          return false;
+        }
+        
+        else {
+          return false;
+        }
+      }
+      
+    
+    const hideErrorMsg = (name) => {
+        toggleErrorVisibility(name, false)
+      }
+    
+    const showErrorMsg = (name) => {
+        toggleErrorVisibility(name, true)
+      }
+    
+    const toggleErrorVisibility = (name, value) => {
+        switch (name) {
+            case "firstName":
+                setVisibleError(prevState => ({
+                    ...prevState,
+                    firstName: value
+                }))
+                break;
+            case "lastName":
+                setVisibleError(prevState => ({
+                    ...prevState,
+                    lastName: value
+                }))
+                break;
+            case "email":
+                setVisibleError(prevState => ({
+                    ...prevState,
+                    email: value
+                }))
+                break;
+            default:
+                break;
+        }
+    }
+    
+    return(
+        <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
+            <form className="p-16px">
+
+            <div className="form-group text-left m-t-8px" >
+            <label htmlFor="exampleInputEmail1">Role</label>
+                    <select className="form-control"  id={"role"}  ref={inputRefRole}  value={state.role} onChange={handleChange}>
+                        <option value="">Select Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="teamMember">Team Member</option>
+                    </select>
+                    <div className="m-2">
+                        {!isEmpty(formErrors.role) && (
+                          <span className="errorMessage">{formErrors.role} </span>
+                        )}
+                      </div>
+                </div>
+
+                <div className="form-group text-left m-t-8px">
+                <label htmlFor="exampleInputEmail1">First Name</label>
+                <input type="text" 
+                       className="form-control" 
+                       id="firstName" 
+                       ref={inputRefFirstName}
+                       aria-describedby="emailHelp" 
+                       placeholder="Enter first name" 
+                       value={state.firstName}
+                       onChange={handleChange}
+                       autoComplete="off"
+                       spellCheck="false"
+                       onFocus={() =>hideErrorMsg("firstName")}
+                       onBlur={() =>showErrorMsg("firstName")}
+                />
+                 <div className="m-2">
+                        {formErrors.firstName.length > 0 && visibleError.firstName && (
+                          <span className="errorMessage">{formErrors.firstName} </span>
+                        )}
+                      </div>
+                </div>
+                <div className="form-group text-left m-t-8px">
+                <label htmlFor="exampleInputEmail1">Last Name</label>
+                <input type="text" 
+                       className="form-control" 
+                       id="lastName" 
+                       ref={inputRefLastName}
+                       aria-describedby="emailHelp" 
+                       placeholder="Enter last Name" 
+                       value={state.lastName}
+                       onChange={handleChange}
+                       autoComplete="off"
+                       spellCheck="false"
+                       onFocus={() =>hideErrorMsg("lastName")}
+                       onBlur={() =>showErrorMsg("lastName")}
+                />  
+                 <div className="m-2">
+                        {formErrors.lastName.length > 0 && visibleError.lastName && (
+                          <span className="errorMessage">{formErrors.lastName} </span>
+                        )}
+                      </div>             
+                </div>
+
+                <div className="form-group text-left m-t-8px">
+                <label htmlFor="exampleInputEmail1">Email address</label>
+                <input type="email" 
+                       className="form-control" 
+                       id="email" 
+                       ref={inputRefEmail}
+                       aria-describedby="emailHelp" 
+                       placeholder="Enter email" 
+                       value={state.email}
+                       onChange={handleChange}
+                       autoComplete="off"
+                       spellCheck="false"
+                       maxLength='130'
+                       onFocus={() =>hideErrorMsg("email")}
+                       onBlur={() =>showErrorMsg("email")}
+                />
+                  <div className="m-2">
+                        {formErrors.email.length > 0 && visibleError.email && (
+                          <span className="errorMessage">{formErrors.email} </span>
+                        )}
+                      </div>
+                </div>
+                <div className="form-check">
+                </div>
+                <button 
+                    type="submit" 
+                    className="btn btn-primary"
+                    onClick={e => handleSubmitClick(e)}
+                >
+                    Register
+                </button>
+            </form>
+            <div className="alert alert-success mt-2" style={{display: state.successMessage ? 'block' : 'none' }} role="alert">
+                {state.successMessage}
+            </div>
+            <div className="mt-2 p-b-16px">
+                <span>Already have an account? </span>
+                <span className="loginText" onClick={() => redirectToLogin()}>Login here</span> 
+            </div>
+            
+        </div>
+    )
+}
+
+export default withRouter(RegistrationForm);

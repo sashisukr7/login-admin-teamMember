@@ -1,38 +1,84 @@
 .App {
-  text-align: center;
+  text-align: center; 
+   background-color: rgb(215 219 232);;
+   min-height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.hv-center {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.cenContainer
+{
+  position: relative;
+  height: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cenContainerAbsolute
+{
+  width: 50%;
+  height: 50%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  border: solid black;
+}
+
+.marginTopSignIn
+{
+  margin-top: -24px !important;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.formSingInMarrgin
+{
+  margin-top: 32px !important;
+}
+
+.footerFixedToBottom
+{
+  position: fixed;
+  bottom: 0;
+  background-color: black;
+  width: 100%;
+  height: 100px;
+}
+
+.text-left
+{
+  text-align: left;
+}
+
+.text-right
+{
+  text-align: right;
+}
+
+.m-l-16px
+{
+  margin-left: 16px;
+}
+
+.m-t-8px
+{
+  margin-top: 8px;
+}
+
+.p-16px
+{
+  padding: 16px;
+}
+
+.p-b-16px
+{
+  padding-bottom: 16px;
+}
+
+.errorMessage
+{
+ color: red;
 }
