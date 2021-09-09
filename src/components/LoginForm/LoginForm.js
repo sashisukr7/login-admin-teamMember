@@ -8,6 +8,7 @@ function LoginForm(props) {
     const history = useHistory();
     const [state, setState] = useState({
         email: "",
+        password: "",
         successMessage: null
     })
     const handleChange = (e) => {
@@ -34,6 +35,7 @@ function LoginForm(props) {
         else {
             const payload = {
                 "email": state.email,
+                "password": state.password,
             }
             axios.post(API_BASE_URL + '/user/login', payload)
                 .then(function (response) {
@@ -47,7 +49,7 @@ function LoginForm(props) {
                        // props.showError(null)
                     }
                     else if (response.code === 204) {
-                      //  props.showError("Username do not match");
+                      //  props.showError("Username and password do not match");
                     }
                     else {
                        // props.showError("Username does not exists");
@@ -81,6 +83,17 @@ function LoginForm(props) {
                         autoComplete="off"
                     />
                     <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div className="form-group text-left">
+                    <label htmlFor="exampleInputPassword1">Password</label>
+                    <input type="password"
+                        className="form-control"
+                        id="password"
+                        placeholder="Password"
+                        value={state.password}
+                        onChange={handleChange}
+                        autoComplete="off"
+                    />
                 </div>
                
                 <div className="form-check">
