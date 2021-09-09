@@ -3,7 +3,7 @@ import axios from 'axios';
 import './RegistrationForm.css';
 import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 import { withRouter } from "react-router-dom";
-import {isEmpty,emailRegex, isValidName} from '../../util/apputils';
+import {isEmpty,emailRegex,passwordRegex,isValidName} from '../../util/apputils';
 
 
 function RegistrationForm(props) {
@@ -11,11 +11,16 @@ function RegistrationForm(props) {
     const inputRefFirstName = useRef(null);
     const inputRefLastName = useRef(null);
     const inputRefEmail = useRef(null);
+    const inputRefPassword = useRef(null);
+    const inputRefConfirmPassword = useRef(null);
+     
     const [state , setState] = useState({
         firstName:"",
         lastName:"",
         role:"",
         email : "",
+        password : "",
+        confirmPassword: "",
         successMessage: null
     })
     const [formErrors , setFormErrors] = useState({
@@ -23,11 +28,15 @@ function RegistrationForm(props) {
         lastName:"",
         role:"",
         email : "",
+        password:"",
+        confirmPassword:"",
     })
     const [visibleError , setVisibleError] = useState({
         firstName:"",
         lastName:"",
         email : "",
+        password:"",
+        confirmPassword:"",
     })
 
     
@@ -83,6 +92,34 @@ function RegistrationForm(props) {
                     setFormErrors(prevState => ({
                         ...prevState,
                         email: "invalid email address"
+                      }))
+                 }
+              break;
+              case "password":
+                if (isValidPassword(value)) {
+                    setFormErrors(prevState => ({
+                        ...prevState,
+                        password: ""
+                      }))
+                  }
+                 else{
+                    setFormErrors(prevState => ({
+                        ...prevState,
+                        password: "Minimum 8 characters & 1 special character required"
+                      }))
+                 }
+              break;
+              case "confirmPassword":
+                if (isValidPassword(value)) {
+                    setFormErrors(prevState => ({
+                        ...prevState,
+                        confirmPassword: ""
+                      }))
+                  }
+                 else{
+                    setFormErrors(prevState => ({
+                        ...prevState,
+                        confirmPassword: "Minimum 8 characters & 1 special character required"
                       }))
                  }
               break;
@@ -156,9 +193,14 @@ function RegistrationForm(props) {
             sendDetailsToServer() 
             }   
     }
+    const isValidPassword=(password)=> {
+        let result = passwordRegex.test(password)
+        return result
+      }
+
     const validateForm=()=> {
-        if (!isEmpty(state.role) && !isEmpty(state.firstName) && !isEmpty(state.lastName) && !isEmpty(state.email) &&
-          isEmpty(formErrors.role) && isEmpty(formErrors.firstName) && isEmpty(formErrors.lastName) && isEmpty(formErrors.email)
+        if (!isEmpty(state.role) && !isEmpty(state.firstName) && !isEmpty(state.lastName) && !isEmpty(state.email) && !isEmpty(state.password) && !isEmpty(state.confirmPassword) &&
+          isEmpty(formErrors.role) && isEmpty(formErrors.firstName) && isEmpty(formErrors.lastName) && isEmpty(formErrors.email) &&  isEmpty(formErrors.password) && isEmpty(formErrors.password)
          ) {
           return true;
         }
@@ -206,7 +248,43 @@ function RegistrationForm(props) {
              }))
           return false;
         }
-        
+        else if (isEmpty(state.password)) {
+            inputRefPassword.current.focus();
+            setFormErrors(prevState => ({
+                ...prevState,
+                password: "Please provide password"
+              }))
+              setVisibleError(prevState => ({
+                 ...prevState,
+                 password:true
+             }))
+          return false;
+        }
+        else if (isEmpty(state.confirmPassword)) {
+            inputRefConfirmPassword.current.focus();
+            setFormErrors(prevState => ({
+                ...prevState,
+                confirmPassword: "Please provide confirm password"
+              }))
+              setVisibleError(prevState => ({
+                 ...prevState,
+                 confirmPassword:true
+             }))
+          return false;
+            }
+          else if (state.confirmPassword != state.password) {
+            inputRefConfirmPassword.current.focus();
+            setFormErrors(prevState => ({
+                ...prevState,
+                confirmPassword: "Passwords do not match"
+              }))
+              setVisibleError(prevState => ({
+                 ...prevState,
+                 confirmPassword:true
+             }))
+          return false;
+        }
+
         else {
           return false;
         }
@@ -239,6 +317,18 @@ function RegistrationForm(props) {
                 setVisibleError(prevState => ({
                     ...prevState,
                     email: value
+                }))
+                break;
+            case "password":
+                setVisibleError(prevState => ({
+                    ...prevState,
+                    password: value
+                }))
+                break;
+            case "confirmPassword":
+                setVisibleError(prevState => ({
+                    ...prevState,
+                    confirmPassword: value
                 }))
                 break;
             default:
@@ -326,6 +416,46 @@ function RegistrationForm(props) {
                   <div className="m-2">
                         {formErrors.email.length > 0 && visibleError.email && (
                           <span className="errorMessage">{formErrors.email} </span>
+                        )}
+                      </div>
+                </div>
+                <div className="form-group text-left">
+                    <label htmlFor="exampleInputPassword1">Password</label>
+                    <input type="password" 
+                        className="form-control" 
+                        id="password" 
+                        ref={inputRefPassword}
+                        placeholder="Password"
+                        value={state.password}
+                        onChange={handleChange} 
+                        autoComplete="off"
+                        spellCheck="false"
+                        onFocus={() =>hideErrorMsg("passsword")}
+                        onBlur={() =>showErrorMsg("password")}
+                    />
+                     <div className="m-2">
+                        {formErrors.password.length > 0 && visibleError.password && (
+                          <span className="errorMessage">{formErrors.password} </span>
+                        )}
+                      </div>
+                </div>
+                <div className="form-group text-left">
+                    <label htmlFor="exampleInputPassword1">Confirm Password</label>
+                    <input type="password" 
+                        className="form-control" 
+                        id="confirmPassword" 
+                        ref={inputRefConfirmPassword}
+                        placeholder="Confirm Password"
+                        value={state.confirmPassword}
+                        onChange={handleChange} 
+                        autoComplete="off"
+                        spellCheck="false"
+                        onFocus={() =>hideErrorMsg("confirmPassword")}
+                        onBlur={() =>showErrorMsg("confirmPassword")}
+                    />
+                     <div className="m-2">
+                        {formErrors.confirmPassword.length > 0 && visibleError.confirmPassword && (
+                          <span className="errorMessage">{formErrors.confirmPassword} </span>
                         )}
                       </div>
                 </div>
