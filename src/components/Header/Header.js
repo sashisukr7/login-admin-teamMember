@@ -1,7 +1,10 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 import { ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
+import {useSelector, useDispatch} from 'react-redux';
+
 function Header(props) {
+    const dispatch = useDispatch();
     const capitalize = (s) => {
         if (typeof s !== 'string') return ''
         return s.charAt(0).toUpperCase() + s.slice(1)
@@ -20,8 +23,10 @@ function Header(props) {
         }
     }
     function handleLogout() {
-       // localStorage.removeItem(ACCESS_TOKEN_NAME)
-        localStorage.clear()
+        dispatch({ type: 'LOGOUT' });
+        localStorage.removeItem("accessToken")
+        localStorage.removeItem("role")
+        //localStorage.clear()
         props.history.push('/login')
         props.updateTitle('Login')
     }
