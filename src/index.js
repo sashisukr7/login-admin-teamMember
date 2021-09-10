@@ -51,3 +51,4 @@ function loadFromLocalStorage() {
 store.subscribe(() => saveToLocalStorage(store.getState()));
 
 
+export default store;

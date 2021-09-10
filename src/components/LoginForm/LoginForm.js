@@ -5,6 +5,7 @@ import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
 import { useHistory } from 'react-router-dom';
 import {isEmpty,emailRegex,passwordRegex,isValidName} from '../../util/apputils';
 import {useSelector, useDispatch} from 'react-redux';
+import store from "../../index"
 
 function LoginForm(props) {
     const dispatch = useDispatch();
@@ -26,6 +27,7 @@ function LoginForm(props) {
         password:"",
     })
     useEffect(() => {
+        console.log("getstate",store.getState())
         try{
             let role=localStorage.getItem("role");
             let accessToken=localStorage.getItem("accessToken");
