@@ -18,12 +18,12 @@ function RegistrationForm(props) {
     const authData = useSelector(state => state.authReducer);
 
     const [state , setState] = useState({
-        firstName:"ss",
-        lastName:"kk",
-        role:"admin",
-        email : "ss@gmail.com",
-        password : "asdfghjk#",
-        confirmPassword: "asdfghjk#",
+        firstName:"",
+        lastName:"",
+        role:"",
+        email : "",
+        password : "",
+        confirmPassword: "",
         successMessage: null
     })
     const [formErrors , setFormErrors] = useState({

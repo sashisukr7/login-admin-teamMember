@@ -13,8 +13,8 @@ function LoginForm(props) {
     const inputRefEmail = useRef(null);
     const inputRefPassword = useRef(null);
     const [state, setState] = useState({
-        email: "ss@gmail.com",
-        password: "asdfghjk#",
+        email: "",
+        password: "",
         successMessage: null
     })
     const [formErrors , setFormErrors] = useState({
@@ -26,6 +26,23 @@ function LoginForm(props) {
         password:"",
     })
     useEffect(() => {
+        try{
+            let role=localStorage.getItem("role");
+            let accessToken=localStorage.getItem("accessToken");
+        if(accessToken && role )
+        {
+            if(role == "admin")
+            {
+                redirectToAdminHome();
+            }
+             else{
+                redirectToTeamMemberHome(); 
+            }
+        }
+    }
+    catch{
+        localStorage.clear()
+    }
         console.log("sssStateRAdmin",userList)
     },[])
     const handleChange = (e) => {
@@ -153,9 +170,10 @@ function LoginForm(props) {
                         {
                             redirectToAdminHome();
                         }
-                        else{
+                        else {
                             redirectToTeamMemberHome(); 
                         }
+                        
                        // props.showError(null)
                     }
                     else if (response.code === 204) {
@@ -173,11 +191,11 @@ function LoginForm(props) {
     }
     const redirectToAdminHome = () => {
         props.updateTitle('Home')
-        props.history.push('/admin');
+        history.push('/admin');
     }
     const redirectToTeamMemberHome = () => {
         props.updateTitle('Home')
-        props.history.push('/teamMember');
+        history.push('/teamMember');
     }
     const redirectToRegister = () => {
          history.push('/register'); 

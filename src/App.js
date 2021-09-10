@@ -67,7 +67,7 @@ function App(props) {
         <Header title={title} updateTitle={updateTitle} />
         <div className="container d-flex align-items-center flex-column">
           <Switch>
-            <Route path="/" exact="true" component={() => <RegistrationForm  updateTitle={updateTitle}/>}>
+            <Route path="/" exact="true" component={() => <LoginForm setTimer={setTimer}  updateTitle={updateTitle} />}>
             </Route>
             <Route path="/register" component={() => <RegistrationForm  updateTitle={updateTitle}/>}>
             </Route>
