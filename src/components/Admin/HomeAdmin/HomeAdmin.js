@@ -4,6 +4,7 @@ import axios from 'axios';
 import '../../../App.css';
 import { useSelector, useDispatch } from 'react-redux';
 import {generateRandomValue} from '../../../util/apputils';
+import HOC from '../../../hoc/auth.guard';
 
 
 function Home(props) {
@@ -239,4 +240,4 @@ function Home(props) {
     )
 }
 
-export default Home;
+export default HOC(Home)

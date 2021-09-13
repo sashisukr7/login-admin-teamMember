@@ -3,8 +3,7 @@ import { ACCESS_TOKEN_NAME, API_BASE_URL } from '../../../constants/apiConstants
 import axios from 'axios';
 import '../../../App.css';
 import { useSelector, useDispatch } from 'react-redux';
-
-
+import HOC from '../../../hoc/auth.guard';
 
 
 function Home(props) {
@@ -127,4 +126,4 @@ function Home(props) {
     )
 }
 
-export default Home;
+export default HOC(Home)
