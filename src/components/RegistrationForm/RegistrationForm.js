@@ -3,7 +3,7 @@ import axios from 'axios';
 import './RegistrationForm.css';
 import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 import { withRouter } from "react-router-dom";
-import {isEmpty,emailRegex,passwordRegex,isValidName} from '../../util/apputils';
+import {isEmpty,emailRegex,passwordRegex,isValidName,generateRandomValue} from '../../util/apputils';
 import {useSelector, useDispatch} from 'react-redux';
 
 
@@ -136,10 +136,6 @@ function RegistrationForm(props) {
 
     }
 
-  function generateRandomValue() {
-    var digits = Math.floor(Math.random() * 9000000000) + 1000000000;
-    return digits;
-  }
     const sendDetailsToServer = () => {
            // props.showError(null);
 //redirect to home page considering admin
@@ -393,6 +389,7 @@ function RegistrationForm(props) {
     }
     
     return(
+      <div className="d-flex align-items-center flex-column">
         <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
             <form className="p-16px">
 
@@ -532,7 +529,7 @@ function RegistrationForm(props) {
                 <span>Already have an account? </span>
                 <span className="loginText" onClick={() => redirectToLogin()}>Login here</span> 
             </div>
-            
+            </div>
         </div>
     )
 }

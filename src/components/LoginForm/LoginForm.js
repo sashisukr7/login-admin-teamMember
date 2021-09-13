@@ -14,8 +14,8 @@ function LoginForm(props) {
     const inputRefEmail = useRef(null);
     const inputRefPassword = useRef(null);
     const [state, setState] = useState({
-        email: "",
-        password: "",
+        email: "sashisukumar@gmail.com",
+        password: "123456789*",
         successMessage: null
     })
     const [formErrors , setFormErrors] = useState({
@@ -33,13 +33,7 @@ function LoginForm(props) {
             let accessToken=localStorage.getItem("accessToken");
         if(accessToken && role )
         {
-            if(role == "admin")
-            {
-                redirectToAdminHome();
-            }
-             else{
-                redirectToTeamMemberHome(); 
-            }
+            checkRoleLogin(role)
         }
     }
     catch{
@@ -47,6 +41,17 @@ function LoginForm(props) {
     }
         console.log("sssStateRAdmin",userList)
     },[])
+
+    const checkRoleLogin =(role)=>{
+        if(role == "admin")
+        {
+            redirectToAdminHome();
+        }
+         else{
+            redirectToTeamMemberHome(); 
+        }
+    }
+    
     const handleChange = (e) => {
         const {id , value} = e.target 
         switch (id) {
@@ -134,7 +139,7 @@ function LoginForm(props) {
 
             props.setTimer(0, 15, 0);
             props.updateTitle('Home')
-            history.push('/admin');
+            checkRoleLogin(userData.role);
         }
         else {
             const payload = {
@@ -168,14 +173,8 @@ function LoginForm(props) {
                               user:userData
                             }
                           });
-                        if(userData.role == "admin")
-                        {
-                            redirectToAdminHome();
-                        }
-                        else {
-                            redirectToTeamMemberHome(); 
-                        }
-                        
+
+                          checkRoleLogin(userData.role);
                        // props.showError(null)
                     }
                     else if (response.code === 204) {
@@ -266,7 +265,8 @@ function LoginForm(props) {
         }
     }
     return (
-        <div className="card col-12 col-lg-4 login-card  mt-2 hv-center p-64px-16px">
+        <div className="d-flex align-items-center flex-column">
+        <div className="card col-12 col-lg-4 login-card  mt-2 hv-center p-64px-16px ">
             <form >
                 <div className="form-group text-left">
                     <label htmlFor="exampleInputEmail1">UserName</label>
@@ -325,6 +325,7 @@ function LoginForm(props) {
                 <span>Dont have an account? </span>
                 <span className="loginText" onClick={() => redirectToRegister()}>Register</span>
             </div>
+        </div>
         </div>
     )
 }

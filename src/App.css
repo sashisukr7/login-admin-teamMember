@@ -48,6 +48,18 @@
   height: 100px;
 }
 
+.container-poll-request-list{
+  border: 1px solid #dbcaec;
+  border-radius: 10px;
+  width: 100%;
+  padding: 10px 10px;
+}
+
+.bg-poll-item
+{
+ background-color:#d2dde0;
+}
+
 .text-left
 {
   text-align: left;
@@ -68,6 +80,22 @@
   margin-top: 8px;
 }
 
+.mx-8px
+{
+  margin: 0px 8px;
+}
+
+
+.m-t-16px
+{
+  margin-top: 16px;
+}
+
+.m-16px
+{
+  margin: 16px;
+}
+
 .p-16px
 {
   padding: 16px;
@@ -85,4 +113,15 @@
 .errorMessage
 {
  color: red;
+}
+
+.container{
+  background: #efe7f7;
+  min-height: calc(100vh + 36px);
+  margin-bottom: 103px;
+}
+
+.pollOption-radio-hover:hover
+{
+background-color:blue;
 }

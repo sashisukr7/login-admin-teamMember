@@ -65,7 +65,7 @@ function App(props) {
     <Router history={history}>
       <div className="App">
         <Header title={title} updateTitle={updateTitle} />
-        <div className="container d-flex align-items-center flex-column">
+        <div className="container">
           <Switch>
             <Route path="/" exact="true" component={() => <LoginForm setTimer={setTimer}  updateTitle={updateTitle} />}>
             </Route>

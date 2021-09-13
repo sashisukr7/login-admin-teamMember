@@ -9,3 +9,7 @@ export function isEmpty(input) {
     return (input === "" || input === undefined || input === null) ? true : false;
   }
   
+ export function generateRandomValue() {
+    var digits = Math.floor(Math.random() * 9000000000) + 1000000000;
+    return digits;
+  }
