@@ -1,0 +1,20 @@
+{
+   "userList":[
+    {
+       "id":"uitiui",
+       "email":"sashisukumar@gmail.com",
+       "accessToken":"123",
+       "name":"Sashisu Kumar",
+       "role":"admin",
+       "password":"123456789*"
+    },
+    {
+       "id":"uhuhohol",
+       "email":"sashisukumart@gmail.com",
+       "accessToken":"1263",
+       "name":"Sashisut Kumar",
+       "role":"teamMember",
+       "password":"123456789*"
+    }
+ ]
+}
