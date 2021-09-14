@@ -5,8 +5,6 @@ import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 import {isEmpty,emailRegex,passwordRegex,isValidName,generateRandomValue} from '../../util/apputils';
 import {useSelector, useDispatch} from 'react-redux';
-import HOC from '../../hoc/auth.guard';
-
 
 function RegistrationForm(props) {
     const dispatch = useDispatch();
@@ -535,4 +533,4 @@ function RegistrationForm(props) {
     )
 }
 
-export default HOC(withRouter(RegistrationForm))
+export default withRouter(RegistrationForm)

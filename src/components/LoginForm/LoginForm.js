@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom';
 import {isEmpty,emailRegex,passwordRegex,isValidName} from '../../util/apputils';
 import {useSelector, useDispatch} from 'react-redux';
 import store from "../../index"
-import HOC from '../../hoc/auth.guard';
 
 
 function LoginForm(props) {
@@ -332,5 +331,4 @@ function LoginForm(props) {
     )
 }
 
-//export default HOC(LoginForm)
 export default LoginForm
