@@ -35,7 +35,6 @@ const ValidationAndRedirection = (WrappedComponent, props) => {
     const redirectToLogin = () => {
         props.updateTitle('Login')
         history.push('/login');
-
     }
 
     const checkCondition =(isAuthenticated,userData)=>
