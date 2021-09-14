@@ -73,9 +73,9 @@ function App(props) {
             </Route>
             <Route path="/login" component={() => <LoginForm setTimer={setTimer}  updateTitle={updateTitle} />}>
             </Route>
-            <Route path="/admin" component={() => <HomeAdmin />}>
+            <Route path="/admin" component={() => <HomeAdmin  updateTitle={updateTitle} />}>
             </Route>
-            <Route path="/teamMember" component={() => <HomeTeamMember />}>
+            <Route path="/teamMember" component={() => <HomeTeamMember  updateTitle={updateTitle} />}>
             </Route>
           </Switch> 
         </div>
