@@ -5,7 +5,7 @@ import '../../../App.css';
 import { useSelector, useDispatch } from 'react-redux';
 import {generateRandomValue} from '../../../util/apputils';
 import HOC from '../../../hoc/auth.guard';
-
+import { useHistory } from 'react-router-dom';
 
 function Home(props) {
     const dispatch = useDispatch();
@@ -14,6 +14,7 @@ function Home(props) {
     const [showAddPollForm, setShowAddPollForm] = useState(false);
     const userList = useSelector(state => state.registedReducer.userList);
     const pollList = useSelector(state => state.pollListReducer.pollList);
+    const history = useHistory();
 
     const [numberOfOptions, setNumberOfOptions] = useState(2)
 
@@ -172,7 +173,7 @@ function Home(props) {
           });
     }
     const handleClickShowChartPoll = () => {
-
+      history.push("/pollCharts");
     }
     const handleClickEditPollItem = () => {
 
@@ -226,8 +227,8 @@ function Home(props) {
                                 ))} 
                                     <div className="">
                                     <button className="btn btn-primary m-16px" onClick={()=>handleClickClosePoll(item.id)}>{item.status=="close"?"Poll Closed":"Close Poll"}</button>
-                                    <button className="btn btn-primary m-16px" onClick={handleClickShowChartPoll}>Show Chart</button>
-                                    <button className="btn btn-primary m-16px" onClick={handleClickEditPollItem}>Edit</button>
+                                    <button className="btn btn-primary m-16px" onClick={()=>handleClickShowChartPoll(item.id)}>Show Chart</button>
+                                    <button className="btn btn-primary m-16px" onClick={handleClickEditPollItem(item.id)}>Edit</button>
                                 </div>
                                     </div>
 

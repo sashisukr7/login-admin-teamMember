@@ -7,6 +7,8 @@ import HomeAdmin from './components/Admin/HomeAdmin/HomeAdmin';
 import HomeTeamMember from './components/TeamMember/HomeTeamMember/HomeTeamMember';
 import { ACCESS_TOKEN_NAME } from './constants/apiConstants';
 import { createBrowserHistory } from 'history';
+import PollApexcharts from './components/Admin/PollApexcharts/PollApexcharts';
+
 
 import {
   BrowserRouter as Router,
@@ -77,6 +79,9 @@ function App(props) {
             </Route>
             <Route path="/teamMember" component={() => <HomeTeamMember  updateTitle={updateTitle} />}>
             </Route>
+            <Route path="/pollCharts" component={() => <PollApexcharts  updateTitle={updateTitle} />}>
+            </Route>
+            
           </Switch> 
         </div>
         <Footer />

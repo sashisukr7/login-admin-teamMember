@@ -127,3 +127,8 @@
   background-color: #0d6efd;
   border-color: #0d6efd;
 }
+
+#chart1 {
+  width: 300px;
+  margin: 0 auto;
+}
