@@ -11,24 +11,24 @@ const isMobileDevice= window.innerWidth < mobileWidthLimit;
           id: "basic-bar"
         },
         xaxis: {
-          categories: ["A",]
+          categories: ["2021",]
         }
       },
       series: [
         {
-          name: "series-1 igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
+          name: "option-A igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
           data: [30]
         },
         {
-            name: "series-1 igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
+            name: "option-B igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
             data: [300]
           },
           {
-            name: "series-1 igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
+            name: "option-C igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
             data: [357]
           },
           {
-            name: "series-1 igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
+            name: "option-D igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
             data: [3044]
           },
 
