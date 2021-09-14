@@ -11,14 +11,26 @@ const isMobileDevice= window.innerWidth < mobileWidthLimit;
           id: "basic-bar"
         },
         xaxis: {
-          categories: ["A","B","C","D"]
+          categories: ["A",]
         }
       },
       series: [
         {
           name: "series-1 igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
-          data: [30, 400, 2505, 5000]
+          data: [30]
         },
+        {
+            name: "series-1 igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
+            data: [300]
+          },
+          {
+            name: "series-1 igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
+            data: [357]
+          },
+          {
+            name: "series-1 igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
+            data: [3044]
+          },
 
       ]
     })
