@@ -1,58 +1,21 @@
 
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
-import {mobileWidthLimit} from '../../util/apputils';
+import { mobileWidthLimit } from '../../util/apputils';
 
-const ApexCharts=(props)=> {
-const isMobileDevice= window.innerWidth < mobileWidthLimit;
- const [state, setState] =useState( {
-      options: {
-        chart: {
-          id: "basic-bar"
-        },
-        xaxis: {
-          categories: ["2021",]
-        }
-      },
-      series: [
-        {
-          name: "option-A igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
-          data: [30]
-        },
-        {
-            name: "option-B igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
-            data: [300]
-          },
-          {
-            name: "option-C igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
-            data: [357]
-          },
-          {
-            name: "option-D igiughiuh iyoiuiououo yuguyguy tuty8 iygiiiiiiiiiii ",
-            data: [3044]
-          },
+const ApexCharts = (props) => {
+    const isMobileDevice = window.innerWidth < mobileWidthLimit;
+    const [options, setOptions] = useState({});
+    const [series, setSeries] = useState([44, 55, 41, 15]);
+    const [labels, setLabels] = useState(['A', 'B', 'C', 'D']);
 
-      ]
-    })
- 
-
-  
     return (
-      <div className="app">
-        <div className="row">
-          <div className="mixed-chart">
-            <Chart
-              options={state.options}
-              series={state.series}
-              type="bar"
-              width={isMobileDevice?"320":"500"}
-            />
-          </div>
+        <div className="pie">
+            <Chart options={options} labels={labels} series={series} type="pie" width={isMobileDevice ? "320" : "380"} />
         </div>
-      </div>
     );
-  
+
 }
 
-  
-  export default ApexCharts
+
+export default ApexCharts
