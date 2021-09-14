@@ -4,7 +4,7 @@ import axios from 'axios';
 //import HOC from "../assets/authData.json";
 import { useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-
+import LoginForm from "../components/LoginForm/LoginForm.js";
 
 const fetchUsers = () => {
     return axios.get('assets/authData.json')
@@ -15,11 +15,11 @@ const ValidationAndRedirection = (WrappedComponent, props) => {
     const history = useHistory();
     const [pageName, setPageName]=useState("");
 
-    useEffect(async () => {
+    useEffect( () => {
         if(pageName)
        return pageName
        
-      await checkAuthenticationFromDB(WrappedComponent);
+       checkAuthenticationFromDB(WrappedComponent);
 
     }, [pageName])
 
@@ -38,13 +38,13 @@ const ValidationAndRedirection = (WrappedComponent, props) => {
 
     }
 
-    const checkCondition =async(isAuthenticated,userData)=>
+    const checkCondition =(isAuthenticated,userData)=>
     {
         if (isAuthenticated && userData.role == "admin") {
-            let iaAdminAcc=isAdminAceessPage()
+            let iaAdminAcc=isAdminAccessPage()
             if (iaAdminAcc) {
                 //same page
-              await  setPageName("samePage")
+                setPageName("samePage")
             }
             else {
                 //home admin page
@@ -54,22 +54,29 @@ const ValidationAndRedirection = (WrappedComponent, props) => {
 
         }
         else if (isAuthenticated && userData.role == "teamMember") {
-            let isteamMemberAcc=isteamMemberAceessPage()
+            let isteamMemberAcc=isteamMemberAccessPage()
             if (isteamMemberAcc) {
                 //same page
-                await  setPageName("samePage")
+                  setPageName("samePage")
             }
             else {
                 //home teammember page
                 redirectToTeamMemberHome();
             }
         }
-        else {
+          else  {
             //login
+            let isPublicAcc=isPublicAccessPage()
+            if (isPublicAcc) {
             localStorage.clear()
-            redirectToLogin();
+            setPageName("samePage")
+        }
+        else{
+            localStorage.clear()
+            redirectToLogin();  
         }
     }
+}
 
     const checkAuthenticationFromDB = async () => {
         
@@ -89,12 +96,10 @@ const ValidationAndRedirection = (WrappedComponent, props) => {
             }
         }
 
-       await checkCondition(isAuthenticated,userData);
-
-      
+        checkCondition(isAuthenticated,userData);      
     }
 
-    const isAdminAceessPage = () => {
+    const isAdminAccessPage = () => {
         let routePath = location.pathname;
 
         if (routePath == "/admin")
@@ -104,19 +109,28 @@ const ValidationAndRedirection = (WrappedComponent, props) => {
     }
 
 
-    const isteamMemberAceessPage = () => {
+    const isteamMemberAccessPage = () => {
         let routePath = location.pathname;
         if (routePath == "/teamMember")
             return true
         else
             return false;
     }
+
+    const isPublicAccessPage = () => {
+        let routePath = location.pathname;
+        if (routePath == "/login" || routePath == "/register")
+            return true
+        else
+            return false;
+    }
+    
+
     if(pageName)
     {
     return pageName
         
     }
-
 }
 
 
@@ -127,6 +141,8 @@ const HOC =  (WrappedComponent,props) => {
         // ... and renders the wrapped component with the fresh data!
         if(pageName=="samePage")
         return <WrappedComponent {...props} />;
+        // else if(pageName=="login")
+        // return <LoginForm {...props} />;
         else
         return null
     }
