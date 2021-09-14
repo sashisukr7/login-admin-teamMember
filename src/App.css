@@ -123,5 +123,7 @@
 
 .pollOption-radio-hover:hover
 {
-background-color:blue;
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
 }

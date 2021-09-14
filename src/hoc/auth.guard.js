@@ -141,8 +141,6 @@ const HOC =  (WrappedComponent,props) => {
         // ... and renders the wrapped component with the fresh data!
         if(pageName=="samePage")
         return <WrappedComponent {...props} />;
-        // else if(pageName=="login")
-        // return <LoginForm {...props} />;
         else
         return null
     }

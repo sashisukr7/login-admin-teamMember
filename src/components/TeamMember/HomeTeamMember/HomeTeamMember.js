@@ -93,7 +93,7 @@ function Home(props) {
                     <h3 className="">Poll Request List</h3>
                     {
                       openPollListState && (openPollListState).map((item, index) => (
-                            <div className="mt-4 bg-poll-item">
+                            <div className="mt-4 bg-poll-item text-left p-16px">
                                 <div className="bg-light">{index+1}. {item.question}</div>
                                  {  
                                   
