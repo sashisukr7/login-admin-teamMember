@@ -332,4 +332,5 @@ function LoginForm(props) {
     )
 }
 
-export default HOC(LoginForm)
+//export default HOC(LoginForm)
+export default LoginForm
