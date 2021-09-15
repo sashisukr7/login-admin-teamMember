@@ -23,7 +23,6 @@ const ValidationAndRedirection = (WrappedComponent, props) => {
 
     }, [pageName])
 
-
     const redirectToAdminHome = () => {
         props.updateTitle('Home')
         history.push('/admin');
@@ -103,10 +102,11 @@ const ValidationAndRedirection = (WrappedComponent, props) => {
 
         if (routePath == "/admin")
             return true
+        else if (routePath == "/pollCharts")
+            return true
         else
             return false;
     }
-
 
     const isteamMemberAccessPage = () => {
         let routePath = location.pathname;
@@ -145,4 +145,3 @@ const HOC =  (WrappedComponent,props) => {
     }
 }
 export default HOC
-
