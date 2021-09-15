@@ -173,7 +173,6 @@ function Home(props) {
           });
     }
     const handleClickShowChartPoll = (id,options) => {
-    //  history.push("/pollCharts");
     let optionWithInitialCount=options.map((item)=>
     {
         let item1={...item,count:0};
