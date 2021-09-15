@@ -172,8 +172,17 @@ function Home(props) {
             }
           });
     }
-    const handleClickShowChartPoll = () => {
-      history.push("/pollCharts");
+    const handleClickShowChartPoll = (id,options) => {
+    //  history.push("/pollCharts");
+    let optionWithInitialCount=options.map((item)=>
+    {
+        let item1={...item,count:0};
+        return item1
+    })
+      history.push({
+        pathname: "/pollCharts",
+        state: {pollRequestId:id,options:optionWithInitialCount}
+        });
     }
     const handleClickEditPollItem = () => {
 
@@ -227,7 +236,7 @@ function Home(props) {
                                 ))} 
                                     <div className="">
                                     <button className="btn btn-primary m-16px" onClick={()=>handleClickClosePoll(item.id)}>{item.status=="close"?"Poll Closed":"Close Poll"}</button>
-                                    <button className="btn btn-primary m-16px" onClick={()=>handleClickShowChartPoll(item.id)}>Show Chart</button>
+                                    <button className="btn btn-primary m-16px" onClick={()=>handleClickShowChartPoll(item.id,item.options)}>Show Chart</button>
                                     <button className="btn btn-primary m-16px" onClick={handleClickEditPollItem(item.id)}>Edit</button>
                                 </div>
                                     </div>

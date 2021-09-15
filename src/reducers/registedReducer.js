@@ -18,7 +18,34 @@ const initState = {
             role:"teamMember",
             password:"123456789*"
 
-        }
+        },
+        {
+            id: "t1uhuhohol",
+            email: 'sashisukumart1@gmail.com',
+            accessToken:"g12jh163",
+            name:"Sashisut1 Kumar",
+            role:"teamMember",
+            password:"123456789*"
+
+        },
+        {
+            id: "uyghuhohol",
+            email: 'sashisukumart2@gmail.com',
+            accessToken:"12ff63",
+            name:"Sashisut2 Kumar",
+            role:"teamMember",
+            password:"123456789*"
+
+        },
+        {
+            id: "uhughggohol",
+            email: 'sashisukumart3@gmail.com',
+            accessToken:"1g26fvj3",
+            name:"Sashisut3 Kumar",
+            role:"teamMember",
+            password:"123456789*"
+
+        },
     ]
 }
 

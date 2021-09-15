@@ -15,6 +15,10 @@ const initState = {
                     id:"ggyfnygf22",
                     option:"it should be like that",
                 },
+                {  
+                    id:"ggyfnkgygf22",
+                    option:"it should be like that not",
+                },
            ],
 
         },
@@ -30,6 +34,22 @@ const initState = {
                 {  
                     id:"gyfnygf22",
                     option:"winter",
+                },
+           ],
+
+        },
+        {
+            id: "yghgghb54",
+            question:"which one?",
+            status:"open",
+            options:[
+                {  
+                    id:"fhyhjvhfygf22",
+                    option:"first one",
+                },
+                {  
+                    id:"jkgyfnygf22",
+                    option:"2nd one",
                 },
            ],
 
