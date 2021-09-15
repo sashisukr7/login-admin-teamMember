@@ -9,36 +9,45 @@ import HOC from '../../../hoc/auth.guard';
 function Home(props) {
     const dispatch = useDispatch();
     const openPollList1 = useSelector(state => state.pollListReducer.pollList);
+    let pollResponseList = useSelector(state => state.pollResponseReducer.pollResponseList);
+    let openPollList;
     const TeamMemberPollListRequest = () => {
         return (openPollList1.filter((item) => item.status != "close"))
     }
-    let openPollList = TeamMemberPollListRequest();
-    openPollList=openPollList.map((item)=>
-    {
-        return {...item,selectedId:""}
-    })
-    const [openPollListState, setOpenPollListState]=useState(openPollList);
+    const [openPollListState, setOpenPollListState]=useState([]);
     const [selectedOptionArray , setSelectedOptionArray]=useState([]);
+    const [responseRendering, setResponseRendering]=useState(false);
+
+
 
    // const openPollList = useSelector(state => state.pollListReducer.TEAM_MEMBER_POLLLIST_REQUEST);
     useEffect(() => {
-        axios.get(API_BASE_URL + '/user/me', { headers: { 'token': localStorage.getItem(ACCESS_TOKEN_NAME) } })
-            .then(function (response) {
-                if (response.status !== 200) {
-                    //   redirectToLogin()
-                }
-            })
-            .catch(function (error) {
-                // redirectToLogin()
-            });
-    },[])
+       console.log("useEffect1") 
+        openPollList = TeamMemberPollListRequest();
+       openPollList=openPollList.map((item)=>
+       {
+           for(let i in pollResponseList )
+       {
+           if(item.id == pollResponseList[i].requestId)
+           {
+               return {...item,oldSelectedId:pollResponseList[i].responseId,selectedId:pollResponseList[i].responseId}
+           }
+       }
+           return {...item,selectedId:""}
+       })
+       setOpenPollListState(openPollList);
+    },[responseRendering])
+
+    
     function redirectToLogin() {
         // props.history.push('/login');
     }
 
-    const handleSelectOption = (questionId,optionId) => {
+    const handleSelectOption = (questionId,optionId,oldSelectedId) => {
         //api call user Response or take all array in same structure of question option,
-       //setSelectedOptionArray
+       if(oldSelectedId)
+       return
+
        openPollList=openPollListState;
        openPollList=openPollList.map((item)=>
        {
@@ -82,9 +91,23 @@ function Home(props) {
     
     const handleSubmitClick = (e) => {
         e.preventDefault();
-       
-        //submit "selectedOptionArray" to api with userId (questionId,optionId,userId)
+        ///submit "selectedOptionArray" to api with userId (questionId,optionId,userId)
         console.log("selectedOptionArray", selectedOptionArray)
+     let pollResponseListItem={};
+     for(let i in selectedOptionArray)
+     {
+        pollResponseListItem.userId=localStorage.getItem("userId");
+        pollResponseListItem.requestId=selectedOptionArray[i].questionId;
+        pollResponseListItem.responseId=selectedOptionArray[i].optionId;
+        dispatch({
+            type: 'ADD_POLLLIST_RESPONSE',
+            payload: {
+                pollResponseListItem
+            }
+          });
+     }
+     console.log("pollResponseList",pollResponseList)
+     setResponseRendering(!responseRendering)
     }
 
     return (
@@ -99,9 +122,9 @@ function Home(props) {
                                   
                                   (item.options).map((optionItem, ItemIndex) => (
                                   
-                                    <div className="pollOption-radio-hover" onClick={()=>handleSelectOption(item.id, optionItem.id)}>
+                                    <div className="pollOption-radio-hover" onClick={()=>handleSelectOption(item.id, optionItem.id, item.oldSelectedId)} >
                                          { console.log("sitem",item)}
-                                        <input className="radio-custom" name={`pollOption ${index}`} type="radio" value={optionItem.id} checked={item.selectedId == optionItem.id} />
+                                        <input className="radio-custom" name={`pollOption ${index}`} disabled={item.oldSelectedId} type="radio" value={optionItem.id} checked={item.selectedId == optionItem.id} />
                                         <label className=" mx-8px">{optionItem.option}</label>
                                         </div>
                                 ))} 
