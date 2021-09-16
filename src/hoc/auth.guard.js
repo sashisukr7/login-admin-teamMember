@@ -135,15 +135,32 @@ const ValidationAndRedirection = (WrappedComponent, props) => {
 }
 
 
+const UpdateTitleOnRefreshPage =(props)=>
+  {
+    const location = useLocation();
+    let routePath = location.pathname;
+    if (routePath == "/admin" || routePath == "/teamMember")
+     props.updateTitle('Home')
+    else if(routePath == "/login" || routePath == "/" )
+    props.updateTitle('Login')
+    else if(routePath == "/register" )
+    props.updateTitle('Register');
+    else if (routePath.includes("/editPollRequest"))
+    props.updateTitle('Edit Poll Request')
+    else if (routePath == "/pollCharts")
+    props.updateTitle('Poll Chart')
+  }
 
 const HOC =  (WrappedComponent,props) => {
     return (props) => {
         let pageName = ValidationAndRedirection(WrappedComponent, props);
         // ... and renders the wrapped component with the fresh data!
+        UpdateTitleOnRefreshPage(props);
         if(pageName=="samePage")
         return <WrappedComponent {...props} />;
         else
         return null
+        
     }
 }
 export default HOC

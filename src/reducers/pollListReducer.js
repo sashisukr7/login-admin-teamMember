@@ -56,11 +56,12 @@ const initState = {
         },
       
     ],
-    openPollList: []
+    openPollList: [],
+    pollRequestById:{},
 }
 
 const pollListReducer = (state = initState, action) => {
-    console.log("sssStateR",action.payload)
+    console.log("sssStateR1",action.payload)
     switch (action.type) {
         case 'ADD_POLLLIST_REQUEST':
             return {
@@ -92,6 +93,27 @@ const pollListReducer = (state = initState, action) => {
 
                 })
             }
+            case 'POLL_REQUEST_BY_ID':
+                return {
+                    ...state,
+                    pollRequestById: (state.pollList.filter((item)=>item.id==action.payload.id))[0]
+                }
+                case 'EDIT_POLL_REQUEST_BY_ID':
+                    return {
+                        ...state,
+                        pollList:state.pollList.map((item)=>
+                        {
+                            if (item.id==action.payload.pollListItem.id)
+                            {
+                            return action.payload.pollListItem
+                            }
+                            else{
+                                return item
+                            }
+        
+                        })
+                    }
+            
         default:
             return state
     }

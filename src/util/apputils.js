@@ -14,3 +14,7 @@ export function isEmpty(input) {
     var digits = Math.floor(Math.random() * 9000000000) + 1000000000;
     return digits;
   }
+
+ export function isEmptyObject(value) {
+    return Object.keys(value).length === 0 && value.constructor === Object;
+  }
