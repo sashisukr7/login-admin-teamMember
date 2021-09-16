@@ -183,8 +183,11 @@ function Home(props) {
         state: {pollRequestId:id,options:optionWithInitialCount}
         });
     }
-    const handleClickEditPollItem = () => {
-
+    const handleClickEditPollItem = (id,options) => {
+        history.push({
+            pathname: "/editPollRequest/"+id,
+            state: {pollRequestId:id,options:options}
+            });
     }
 
     return (
@@ -236,7 +239,7 @@ function Home(props) {
                                     <div className="">
                                     <button className="btn btn-primary m-16px" onClick={()=>handleClickClosePoll(item.id)}>{item.status=="close"?"Poll Closed":"Close Poll"}</button>
                                     <button className="btn btn-primary m-16px" onClick={()=>handleClickShowChartPoll(item.id,item.options)}>Show Chart</button>
-                                    <button className="btn btn-primary m-16px" onClick={handleClickEditPollItem(item.id)}>Edit</button>
+                                    <button className="btn btn-primary m-16px" onClick={()=>handleClickEditPollItem(item.id,item.options)}>Edit</button>
                                 </div>
                                     </div>
 

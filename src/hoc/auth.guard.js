@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import LoginForm from "../components/LoginForm/LoginForm.js";
 
 const fetchUsers = () => {
-    return axios.get('assets/authData.json')
+    return axios.get('http://localhost:3000//assets/authData.json')
 }
 
 const ValidationAndRedirection = (WrappedComponent, props) => {
@@ -103,6 +103,8 @@ const ValidationAndRedirection = (WrappedComponent, props) => {
         if (routePath == "/admin")
             return true
         else if (routePath == "/pollCharts")
+            return true
+        else if (routePath.includes("/editPollRequest"))
             return true
         else
             return false;

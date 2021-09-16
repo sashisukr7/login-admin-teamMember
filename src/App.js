@@ -8,6 +8,7 @@ import HomeTeamMember from './components/TeamMember/HomeTeamMember/HomeTeamMembe
 import { ACCESS_TOKEN_NAME } from './constants/apiConstants';
 import { createBrowserHistory } from 'history';
 import PollApexcharts from './components/Admin/PollApexcharts/PollApexcharts';
+import ModifyPollRequest from './components/Admin/ModifyPollRequest/ModifyPollRequest';
 
 
 import {
@@ -80,6 +81,8 @@ function App(props) {
             <Route path="/teamMember" component={() => <HomeTeamMember  updateTitle={updateTitle} />}>
             </Route>
             <Route path="/pollCharts" component={() => <PollApexcharts  updateTitle={updateTitle} />}>
+            </Route>
+            <Route path="/editPollRequest/:pollRequestId" component={() => <ModifyPollRequest  updateTitle={updateTitle} />}>
             </Route>
             
           </Switch> 

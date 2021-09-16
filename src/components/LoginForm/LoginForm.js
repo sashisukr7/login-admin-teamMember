@@ -15,7 +15,7 @@ function LoginForm(props) {
     const inputRefEmail = useRef(null);
     const inputRefPassword = useRef(null);
     const [state, setState] = useState({
-        email: "sashisukumart@gmail.com",
+        email: "sashisukumar@gmail.com",
         password: "123456789*",
         successMessage: null
     })
