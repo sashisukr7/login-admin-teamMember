@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import LoginForm from "../components/LoginForm/LoginForm.js";
 
 const fetchUsers = () => {
-    return axios.get('http://localhost:3000//assets/authData.json')
+    return axios.get('http://localhost:3000/assets/authData.json')
 }
 
 const ValidationAndRedirection = (WrappedComponent, props) => {
