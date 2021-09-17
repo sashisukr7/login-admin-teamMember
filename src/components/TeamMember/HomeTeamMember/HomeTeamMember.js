@@ -5,7 +5,6 @@ import '../../../App.css';
 import { useSelector, useDispatch } from 'react-redux';
 import HOC from '../../../hoc/auth.guard';
 
-
 function Home(props) {
     const dispatch = useDispatch();
     const openPollList1 = useSelector(state => state.pollListReducer.pollList);
@@ -89,6 +88,8 @@ function Home(props) {
     }
     }
     
+   
+        // <i class="fas fa-edit"></i>
     const handleSubmitClick = (e) => {
         e.preventDefault();
         ///submit "selectedOptionArray" to api with userId (questionId,optionId,userId)
@@ -111,40 +112,26 @@ function Home(props) {
     }
 
     return (
-        <>
+        // <div>
+        <div className="d-flex align-items-center flex-column">
           <div className="container-poll-request-list m-t-16px">
                     <h3 className="">Poll Request List</h3>
+ {/* <div className="d-flex align-items-center flex-column">
+        <div className="card col-12 col-lg-4 login-card  mt-2 hv-center p-64px-16px "></div> */}
                     {
                       openPollListState && (openPollListState).map((item, index) => (
-                            <div className="mt-4 bg-poll-item text-left p-16px">
-                                <div className="bg-light">{index+1}. {item.question}</div>
-                                 {  
-                                  
-                                  (item.options).map((optionItem, ItemIndex) => (
-                                  
-                                    <div className="pollOption-radio-hover" onClick={()=>handleSelectOption(item.id, optionItem.id, item.oldSelectedId)} >
-                                         { console.log("sitem",item)}
-                                        <input className="radio-custom" name={`pollOption ${index}`} disabled={item.oldSelectedId} type="radio" value={optionItem.id} checked={item.selectedId == optionItem.id} />
-                                        <label className=" mx-8px">{optionItem.option}</label>
-                                        </div>
-                                ))} 
-                              
-                                    </div>
-
+                            <div className="bg-poll-list d-flex text-left flex-row  m-16px">
+                                <div className="col-10">{index+1}. {item.question}</div>
+                                <div className="col-2">
+                                    {console.log("objectitem",item)}
+                                 {item.oldSelectedId?<i class="fas fa-eye"></i>:<i class="far fa-save"></i>} 
+                          </div>
+                          </div>
                                 ))}
-                     {
-                      openPollListState.length>0 &&
-                                  <button
-                                      type="submit"
-                                      className="btn btn-primary btn-lg m-t-16px"
-                                      onClick={e => handleSubmitClick(e)}
-                                  >
-                                      Submit
-                           </button>
-                         }
-                             
+                   
                             </div>
-        </>
+                            </div>
+        // </div>
 
     )
 }
