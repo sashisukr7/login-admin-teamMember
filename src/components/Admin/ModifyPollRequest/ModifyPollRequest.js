@@ -4,16 +4,16 @@ import HOC from '../../../hoc/auth.guard';
 import PollRequestForm from "./PollRequestForm";
 
 function ModifyPollRequest(props) {
-  
+
     useEffect(() => {
-       
-    },[])
+
+    }, [])
 
     return (
         <>
-            <>
-              <PollRequestForm fromPage="modifyPollRequest"/>
-            </>
+            <div className="container">
+                <PollRequestForm fromPage="modifyPollRequest" />
+            </div>
         </>
 
     )

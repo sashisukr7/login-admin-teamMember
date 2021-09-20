@@ -70,7 +70,7 @@ function App(props) {
     <Router history={history}>
       <div className={`App ${(window.location.pathname=="/login" || window.location.pathname=="/") && "bg-login"}`}>
         <Header title={title} updateTitle={updateTitle} />
-        <div className={`container ${(window.location.pathname=="/login" || window.location.pathname=="/")  && "bg-login"}`}>
+        {/* <div className={`container ${(window.location.pathname=="/login" || window.location.pathname=="/")  && "bg-login"}`}> */}
           <Switch>
             <Route path="/" exact="true" component={() => <LoginForm setTimer={setTimer}  updateTitle={updateTitle} />}>
             </Route>
@@ -90,7 +90,7 @@ function App(props) {
             </Route>
             
           </Switch> 
-        </div>
+        {/* </div> */}
         <Footer title={title} updateTitle={updateTitle} />
       </div>
     </Router>

@@ -531,6 +531,7 @@ function RegistrationForm(props) {
             </div>
             </div>
         </div>
+       
     )
 }
 

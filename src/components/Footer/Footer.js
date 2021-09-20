@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
  function Footer(props) {
     return (
         <FooterCall >
-            <div className="footerFixedToBottom" style={{display:(props.location.pathname=="/login" || props.location.pathname=="/")?"none":"block"}}>
+            <div className="footerFixedToBottom" style={{display:(props.location.pathname=="/login" || props.location.pathname=="/" || props.location.pathname=="/register")?"none":"block"}}>
                 <div className="cenContainer">
                     <div className="cenContainerAbsolute">
                         <span>Copyright © 2021 Admin TeamMember.</span>

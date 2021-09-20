@@ -38,8 +38,10 @@ function PollApexcharts(props) {
 
     return (
         <>
+          <div className="container">
             <div className="d-flex align-items-center flex-column p-64px-16px" >
               <Apexcharts seriesParent={series} labelsParent={labels} />
+            </div>
             </div>
         </>
 

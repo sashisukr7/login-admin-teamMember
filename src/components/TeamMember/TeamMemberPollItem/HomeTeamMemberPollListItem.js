@@ -111,6 +111,7 @@ function Home(props) {
 
     return (
         <>
+            <div className="container">
           <div className="container-poll-request-list m-t-16px">
                     <h3 className="">Poll Request List</h3>
 
@@ -154,6 +155,7 @@ function Home(props) {
                            </button>
                          }
                              
+                            </div>
                             </div>
         </>
 
