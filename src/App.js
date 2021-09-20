@@ -9,6 +9,8 @@ import { ACCESS_TOKEN_NAME } from './constants/apiConstants';
 import { createBrowserHistory } from 'history';
 import PollApexcharts from './components/Admin/PollApexcharts/PollApexcharts';
 import ModifyPollRequest from './components/Admin/ModifyPollRequest/ModifyPollRequest';
+import HomeTeamMemberPollListItem from './components/TeamMember/TeamMemberPollItem/HomeTeamMemberPollListItem';
+
 
 
 import {
@@ -66,9 +68,9 @@ function App(props) {
   }, []);
   return (
     <Router history={history}>
-      <div className="App">
+      <div className={`App ${window.location.pathname=="/login" && "bg-login"}`}>
         <Header title={title} updateTitle={updateTitle} />
-        <div className="container">
+        <div className={`container ${window.location.pathname=="/login" && "bg-login"}`}>
           <Switch>
             <Route path="/" exact="true" component={() => <LoginForm setTimer={setTimer}  updateTitle={updateTitle} />}>
             </Route>
@@ -83,6 +85,8 @@ function App(props) {
             <Route path="/pollCharts" component={() => <PollApexcharts  updateTitle={updateTitle} />}>
             </Route>
             <Route path="/editPollRequest/:pollRequestId" component={() => <ModifyPollRequest  updateTitle={updateTitle} />}>
+            </Route>
+            <Route path="/submitPollRequest/:pollRequestId" component={() => <HomeTeamMemberPollListItem  updateTitle={updateTitle} />}>
             </Route>
             
           </Switch> 

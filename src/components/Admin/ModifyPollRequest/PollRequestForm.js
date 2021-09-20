@@ -139,6 +139,7 @@ const PollRequestForm = ({fromPage}) => {
     }
 
     const submitPollRequest = (e) => {
+        //call submit to parents
         e.preventDefault();
         let pollListItem = {}
         let ran=(fromPage=="modifyPollRequest")?pollRequestById.id:generateRandomValue();

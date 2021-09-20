@@ -15,7 +15,7 @@ function LoginForm(props) {
     const inputRefEmail = useRef(null);
     const inputRefPassword = useRef(null);
     const [state, setState] = useState({
-        email: "sashisukumar@gmail.com",
+        email: "sashisukumart@gmail.com",
         password: "123456789*",
         successMessage: null
     })
@@ -28,7 +28,7 @@ function LoginForm(props) {
         password:"",
     })
     useEffect(() => {
-        console.log("getstate",store.getState())
+        window.scrollTo(0,0);
         try{
             let role=localStorage.getItem("role");
             let accessToken=localStorage.getItem("accessToken");
@@ -267,8 +267,8 @@ function LoginForm(props) {
     }
     return (
         <div className="d-flex align-items-center flex-column">
-        <div className="card col-12 col-lg-4 login-card  mt-2 hv-center p-64px-16px ">
-            <form >
+        <div  className="card p-absolute login-width center-screen login-box-shadow col-12 col-sm-4 hv-center p-32px m-t-n24px">
+            <form className="login-form-width" >
                 <div className="form-group text-left">
                     <label htmlFor="exampleInputEmail1">UserName</label>
                     <input type="email"
@@ -322,7 +322,7 @@ function LoginForm(props) {
             <div className="alert alert-success mt-2" style={{ display: state.successMessage ? 'block' : 'none' }} role="alert">
                 {state.successMessage}
             </div>
-            <div className="registerMessage">
+            <div className="m-t-8px">
                 <span>Dont have an account? </span>
                 <span className="loginText" onClick={() => redirectToRegister()}>Register</span>
             </div>

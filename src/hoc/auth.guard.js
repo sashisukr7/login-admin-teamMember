@@ -105,7 +105,7 @@ const ValidationAndRedirection = (WrappedComponent, props) => {
         else if (routePath == "/pollCharts")
             return true
         else if (routePath.includes("/editPollRequest"))
-            return true
+            return true      
         else
             return false;
     }
@@ -113,6 +113,8 @@ const ValidationAndRedirection = (WrappedComponent, props) => {
     const isteamMemberAccessPage = () => {
         let routePath = location.pathname;
         if (routePath == "/teamMember")
+            return true
+        else if (routePath.includes("/submitPollRequest"))
             return true
         else
             return false;
@@ -149,6 +151,8 @@ const UpdateTitleOnRefreshPage =(props)=>
     props.updateTitle('Edit Poll Request')
     else if (routePath == "/pollCharts")
     props.updateTitle('Poll Chart')
+    else if (routePath.includes("/submitPollRequest"))
+    props.updateTitle('Submit Poll Request')
   }
 
 const HOC =  (WrappedComponent,props) => {
@@ -157,7 +161,7 @@ const HOC =  (WrappedComponent,props) => {
         // ... and renders the wrapped component with the fresh data!
         UpdateTitleOnRefreshPage(props);
         if(pageName=="samePage")
-        return <WrappedComponent {...props} />;
+        return <WrappedComponent {...props}  />;
         else
         return null
         

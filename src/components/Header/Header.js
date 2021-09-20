@@ -31,8 +31,8 @@ function Header(props) {
         props.updateTitle('Login')
     }
     return (
-        <nav className="navbar navbar-dark bg-black">
-            <div className="row col-12 d-flex justify-content-center text-white">
+        <nav className="navbar navbar-dark bg-white header-box-shadow">
+            <div className="row col-12 d-flex justify-content-center text-black">
                 <span className="h3 col m-l-16px text-left" >{props.title || title}</span>
                 {renderLogout()}
             </div>

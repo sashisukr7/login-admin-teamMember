@@ -1,9 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 .App {
   text-align: center; 
-   background-color: rgb(215 219 232);;
+   background-color: white;
    min-height: 100vh;
 }
 
+.bg-login
+{
+  /* background-color: blue !important; */
+  background-color: #0d6efd!important;
+  border-color: #0d6efd!important;
+}
+
+i
+{
+cursor:pointer;
+margin:0px 16px
+}
+
+.disable-opacity
+{
+opacity: 0.2;
+}
+.cursor-default
+{
+  cursor: default;
+}
 .hv-center {
   display: flex;
   justify-content: center;
@@ -49,10 +72,14 @@
 }
 
 .container-poll-request-list{
-  border: 1px solid #dbcaec;
-  border-radius: 10px;
+  /* border: 1px solid #dbcaec;
+  border-radius: 10px; */
   width: 100%;
   padding: 10px 10px;
+}
+.regular-400
+{
+  font-family: 'Open Sans', sans-serif;
 }
 
 .bg-poll-item
@@ -85,6 +112,35 @@
   margin: 0px 8px;
 }
 
+.center-screen
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.p-absolute
+{
+  position: absolute !important;
+}
+
+.login-width {
+  width:300px !important;
+}
+.container122
+{
+  background-color: blue;
+}
+.login-box-shadow
+{
+  box-shadow: 1px 1px 2px 2px #888888;
+}
+
+.login-form-width
+{
+  min-width:230px
+}
 
 .m-t-16px
 {
@@ -100,11 +156,18 @@
 {
   padding: 16px;
 }
+.p-32px
+{
+  padding: 32px;
+}
 .p-64px-16px
 {
   padding: 64px 16px;
 }
-
+.p-24px-16px
+{
+  padding: 24px 16px;
+}
 .p-b-16px
 {
   padding-bottom: 16px;
@@ -116,7 +179,7 @@
 }
 
 .container{
-  background: #efe7f7;
+  background: white;
   min-height: calc(100vh + 36px);
   margin-bottom: 103px;
 }
@@ -128,7 +191,16 @@
   border-color: #0d6efd;
 }
 
-#chart1 {
-  width: 300px;
-  margin: 0 auto;
+.header-box-shadow
+{
+  box-shadow: 0px 4px 4px #888888;
+}
+
+.m-16px
+{
+  margin: 16px;
+}
+.m-t-n24px
+{
+margin-top: -24px;
 }

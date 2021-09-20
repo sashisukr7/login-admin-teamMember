@@ -226,24 +226,40 @@ function Home(props) {
                  </form>
                  </div>
 
-                <div className="container-poll-request-list m-t-16px">
+                <div className="container-poll-request-list m-t-16px col-lg-10 col-12">
                     <h3 className="">Poll Request List</h3>
                     {
                       pollList &&  (pollList).map((item, index) => (
-                            <div className="mt-4 bg-poll-item">
-                                <div className="bg-light">{index+1}. {item.question}</div>
+                            <div className="card login-box-shadow mt-4 bg-poll-item text-left p-16px">
+                                 
+                                <div className="regular-400">{index+1}. {item.question}</div>
                                  {  
                                   (item.options).map((optionItem, ItemIndex) => (
                                     <div className="">
-                                        <div className="text-secondary">{String.fromCharCode(65 + ItemIndex)}. {optionItem.option}</div>
+                                        <div className="text-secondary"><b>{String.fromCharCode(65 + ItemIndex)}.</b> {optionItem.option}</div>
                                         </div>
                                 ))} 
-                                    <div className="">
-                                    <button className="btn btn-primary m-16px" onClick={()=>handleClickClosePoll(item.id)}>{item.status=="close"?"Poll Closed":"Close Poll"}</button>
+                                    <div className="text-center d-flex fex-row justify-content-center">
+                                    
+                                     <div><i class={`far fa-window-close ${item.status=="close" && "disable-opacity cursor-default"}`} title="poll Close" onClick={()=>handleClickClosePoll(item.id)}></i>
+                                     <div>{item.status=="close"?"closed":"close"}</div>
+                                     </div>
+                                    
+                                     <div>
+                                    <i class="fas fa-chart-pie" title="poll Chart" onClick={()=>handleClickShowChartPoll(item.id,item.options)}></i>
+                                   <div>chart</div>
+                                   </div>
+                                   <div>
+                                     <i class="fas fa-edit" title="poll Edit" onClick={()=>handleClickEditPollItem(item.id,item.options)}></i>
+                                     <div>edit</div>
+                                     </div>
+                                    {/* <button className="btn btn-primary m-16px" onClick={()=>handleClickClosePoll(item.id)}>{item.status=="close"?"Poll Closed":"Close Poll"}</button>
                                     <button className="btn btn-primary m-16px" onClick={()=>handleClickShowChartPoll(item.id,item.options)}>Show Chart</button>
                                     <button className="btn btn-primary m-16px" onClick={()=>handleClickEditPollItem(item.id,item.options)}>Edit</button>
+                               */}
                                 </div>
-                                    </div>
+                               </div>
+                                  
 
                                 ))}
 
