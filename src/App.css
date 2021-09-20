@@ -8,9 +8,8 @@
 
 .bg-login
 {
-  /* background-color: blue !important; */
-  background-color: #0d6efd!important;
-  border-color: #0d6efd!important;
+  background-color: #38a6dc!important;
+  border-color: #38a6dc!important;
 }
 
 i
@@ -181,7 +180,8 @@ opacity: 0.2;
 .container{
   background: white;
   min-height: calc(100vh + 36px);
-  margin-bottom: 103px;
+  /* margin-bottom: 103px; */
+  padding-bottom: 103px;
 }
 
 .pollOption-radio-hover:hover

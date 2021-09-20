@@ -36,6 +36,7 @@ function Home(props) {
         setShowAddPollForm(!showAddPollForm)
     }
     useEffect(() => {
+        window.scrollTo(0,0);
         console.log("sssStateRAdmin", userList)
         console.log("sssStateRAdminpolllist", pollList)
         axios.get(API_BASE_URL + '/user/me', { headers: { 'token': localStorage.getItem(ACCESS_TOKEN_NAME) } })
@@ -196,7 +197,7 @@ function Home(props) {
         <>
             <div className="d-flex align-items-center flex-column" >
 
-                <button className="btn btn-outline-primary  btn-lg m-t-16px" onClick={handleClickAddPoll}>add poll</button>
+            <div className="text-right col-12 text-primary m-t-16px"><i class="fas fa-plus " onClick={handleClickAddPoll}></i></div>
                 <div className="card col-12 col-lg-4 login-card  mt-2 hv-center p-64px-16px " style={{display:showAddPollForm?"block":"none" }}>
             <form >
                 <div className="form-group m-t-8px text-left">

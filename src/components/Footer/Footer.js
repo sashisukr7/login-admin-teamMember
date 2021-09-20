@@ -1,11 +1,12 @@
 import React from 'react';
 import '../../App.css';
+import { withRouter } from "react-router-dom";
 
 
-export default function Footer(props) {
+ function Footer(props) {
     return (
-        <FooterCall>
-            <div className="footerFixedToBottom" >
+        <FooterCall >
+            <div className="footerFixedToBottom" style={{display:(props.location.pathname=="/login" || props.location.pathname=="/")?"none":"block"}}>
                 <div className="cenContainer">
                     <div className="cenContainerAbsolute">
                         <span>Copyright © 2021 Admin TeamMember.</span>
@@ -23,3 +24,5 @@ export default function Footer(props) {
 function FooterCall({ children }) {
     return <footer className="app-footer" >{children}</footer>;
 }
+
+export default withRouter(Footer);
