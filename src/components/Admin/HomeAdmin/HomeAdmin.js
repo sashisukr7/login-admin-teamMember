@@ -197,7 +197,7 @@ function Home(props) {
         <>
             <div className="d-flex align-items-center flex-column" >
 
-            <div className="text-right col-12 text-primary m-t-16px"><i class="fas fa-plus " onClick={handleClickAddPoll}></i></div>
+            <div className="text-right col-10 text-primary m-t-16px"><i class="fas fa-plus " onClick={handleClickAddPoll}></i></div>
                 <div className="card col-12 col-lg-4 login-card  mt-2 hv-center p-64px-16px " style={{display:showAddPollForm?"block":"none" }}>
             <form >
                 <div className="form-group m-t-8px text-left">
