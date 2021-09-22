@@ -114,12 +114,13 @@ function Home(props) {
     return (
         <>
         <div className="container">
-          <div className="container-poll-request-list m-t-16px">
+        <div className="d-flex align-items-center flex-column" >
+          <div className="container-poll-request-list m-t-16px col-lg-10 col-12">
                     <h3 className="">Poll Request List</h3>
                     {
                       openPollListState && (openPollListState).map((item, index) => (
-                            <div className="mt-4 bg-poll-item text-left p-16px">
-                                <div className="bg-light">{index+1}. {item.question}</div>
+                            <div className="card login-box-shadow mt-4 bg-poll-item text-left p-16px">
+                                <div className="regular-400">{index+1}. {item.question}</div>
                                  {  
                                   
                                   (item.options).map((optionItem, ItemIndex) => (
@@ -145,6 +146,7 @@ function Home(props) {
                            </button>
                          }
                              
+                            </div>
                             </div>
                             </div>
         </>

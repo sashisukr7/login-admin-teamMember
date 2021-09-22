@@ -68,7 +68,7 @@ function App(props) {
   }, []);
   return (
     <Router history={history}>
-      <div className={`App ${(window.location.pathname=="/login" || window.location.pathname=="/") && "bg-login"}`}>
+      <div className={`App ${(window.location.pathname=="/login" || window.location.pathname=="/" || window.location.pathname=="/register") && "bg-login"}`}>
         <Header title={title} updateTitle={updateTitle} />
         {/* <div className={`container ${(window.location.pathname=="/login" || window.location.pathname=="/")  && "bg-login"}`}> */}
           <Switch>
